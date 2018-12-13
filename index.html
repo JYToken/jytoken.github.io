@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- metatags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#343a40">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="/css/alertify.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/ghostframe.css">
+    <script src="/js/jquery-3.2.0.min.js"></script>
+    <title>结约通证</title>
+</head>
+
+<body>
+    <module-bash>
+    </module-bash>
+    <!-- <div class="blurryboy"></div> -->
+    <div id="main-wrapper">
+        <!-- navigation -->
+        <header class="topbar fixed-top">
+            <module-navbar>
+            </module-navbar>
+        </header>
+        <!-- /navigation -->
+        <!-- noscript message -->
+        <noscript>
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-purp pulse text-center text-light" role="alert" style="margin-top:8rem;">Please enable Javascript</div>
+                </div>
+            </div>
+        </noscript>
+        <!-- /noscript -->
+        <!-- modal loading -->
+        <!-- toggle with jQuery('#loading').modal({backdrop: 'static', keyboard: false})
+      this makes it impossible to close modal by clicking outside the box -->
+        <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 99999999;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-body" style="padding-top:1.5rem; padding-bottom:1.5rem;">
+                        <div class="row justify-content-between">
+                            <div class="col-auto">
+                                Please check your Metamask...
+                            </div>
+                            <div class="col-2">
+                                <div class="miniloader"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal loading -->
+        <!-- modal vanity -->
+        <div class="modal fade" id="vanity" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-body" style="padding-top:1.5rem; padding-bottom:1.5rem;">
+                        <!-- Name chooser -->
+                        <div class="row">
+                            <div class="col">
+                                <p class="lead nomarginb">Graffiti your name on the Blockchain</p>
+                            </div>
+                            <div class="col-auto">
+                                <p class="text-right nomarginb">
+                                    <a href="#" class="closemodal">
+                    <i class="fas fa-times"></i>
+                  </a>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-outline-yel" type="button" id="randomName">
+                                                    Random
+                                                </button>
+                                            </div>
+                                            <input class="form-control text-center" type="text" placeholder="type here" id="nameInput">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="small">
+                                    <br>
+                                    Names must follow these rules:<br>
+                                    -Must be unique <i>[<a style="color:#00c9ed" href="https://fomo3d.eu/">database of unique names</a>]</i><br>
+                                    -32 Characters or Less<br>
+                                    -A-Z (lowercase)<br>
+                                    -Name cannot be <i>just</i> numbers, but numbers are allowed<br>
+                                    -No special characters<br>
+                                    -No more than one space between characters<br>
+                                    <br>
+                                    If the transaction fails, one of these criteria was not met properly. <br>
+                                    <br>
+                                    Names are yours permanently (for vanity URLS). But only your most recent name will show up on the leaderboard/game UI. You can own as many names as you'd like.<br><br>
+                                    Make it good.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-purp btn-block btn-lg" id="namePurchase"><i class="fab fa-ethereum"></i> Purchase for 0.01 ETH</button>
+                                <p style="font-size:0.7rem;color:#afafaf"> The fee is distributed across community members who made this game possible.</p>
+                            </div>
+                        </div>
+                        <!-- /Name chooser -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal vanity -->
+        <!-- 
+      <div id="quotes" class="topbar fixed-top text-light bg-dark jumboshade" style="z-index:99;">
+        <div class="container">
+          <div class="row">
+            <div class="col-auto">
+              <i class="fas fa-stopwatch"></i> <span class="boxtimer lead small">00:00:00</span>
+            </div>
+            <div class="col-auto yourkeys">
+              <i class="fas fa-key"></i> <span class="lead small">0000</span>
+            </div>
+            <div class="col col-2 yourrank">
+              <i class="fas fa-list-ol"></i> <span></span>
+            </div>
+            <div class="col afflink" if={$this.isCEO}>
+              <i class="fas fa-link"></i> <span class="lead small"></span>
+            </div>
+            <div class="col text-right">
+              <span class="lead small qTarget">Loading Memes</span>  
+            </div>
+          </div>
+        </div> -->
+    </div>
+    <div id="spacer" class="spacer"></div>
+            <!-- main content (exchangeable) -->
+        <module-template>
+        </module-template>
+        <module-airdrop>
+        </module-airdrop>
+        <module-modal>
+        </module-modal>
+        <!-- /main content -->
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/js/alertify.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="/js/fontawesome-all.min.js"></script>
+    <script>
+    // Vanity modal
+    jQuery(".vanity").click(function() {
+        jQuery('#vanity').modal()
+    })
+    jQuery(".closemodal").click(function() {
+        jQuery('#vanity').modal('hide')
+    })
+
+    // Random Name generator
+    jQuery('#randomName').click(function() {
+        jQuery('#nameInput').val(namegen.generate());
+    })
+
+    /*Switch for low graphics mode
+    if (window.localStorage.length > 0) {
+        if (localStorage['fancy'] == "false") {
+            jQuery("#fancyswitch").prop("checked", false);
+            var toggled = false
+        } else {
+            jQuery("#fancyswitch").prop("checked", true);
+            var toggled = true
+        }
+    }
+
+    function graphicslow() {
+        jQuery('#hdgraphics').toggle();
+        toggled = !toggled
+        localStorage.setItem('fancy', toggled);
+    }
+
+    // Switch to toggle tutorials
+    if (window.localStorage.length > 0) {
+        if (localStorage['tutorials'] == "false") {
+            jQuery("#tutorialswitch").prop("checked", false);
+            var toggled2 = false
+        } else {
+            jQuery("#tutorialswitch").prop("checked", true);
+            var toggled2 = true
+        }
+    } */
+    </script>
+    <script src="/js/bundle.js"></script>
+</body>
+
+</html>
