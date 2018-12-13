@@ -1,0 +1,502 @@
+<state-jyt>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/7.2.1/bignumber.min.js"></script>
+    <!-- API HANDLING FROM ETHERS CAN AND OUR DJ MC-PUMP -->
+    <!-- API HANDLING FROM ETHERS CAN AND OUR DJ MC-PUMP -->
+    <script>
+    jQuery(document).ready(() => {
+        // define a new BigNumber instance with formatting options
+        const FBN = BN.clone({
+            DECIMAL_PLACES: 4,
+            FORMAT: {
+                decimalSeparator: '.',
+                groupSeparator: ',',
+                groupSize: 3,
+                secondaryGroupSize: 0,
+                fractionGroupSeparator: ' ',
+                fractionGroupSize: 0,
+            }
+        });
+
+        // format a BigNumber represented in wei as ETH value
+        let formatBN = (bn) => {
+            return new FBN(bn).div('1000000000000000000').toFormat(1);
+        }
+
+        /* Initializes Popovers so they only require 1 click
+with love -justo */
+        $(function() {
+            $('[data-toggle="popover"]').popover();
+            $('.checkmark').popover({
+                trigger: "hover"
+            });
+        })
+
+        setTimeout(function() {
+            $('.tutorialArrow').fadeOut('fast');
+        }, 20000); // <-- time in milliseconds
+    });
+    </script>
+    <!-- API HANDLING FROM ETHERS CAN AND OUR DJ MC-PUMP -->
+    <!-- API HANDLING FROM ETHERS CAN AND OUR DJ MC-PUMP -->
+    <div class="p3dblurryboy"></div>
+    <!-- fomo-->
+    <!-- NOTE: Displays the current pot size in ETH as well as time left in current round -->
+    <style>
+        
+    .titlepopoutrightminired {
+    text-shadow: 1px 1px #2b002b, 2px 2px #c0c, 3px 3px #c0c;
+    }  
+    </style>
+
+    <div class="jumbotron-fix jumbotron-dark text-light">
+        <div class="container text-center">
+            <h5 class="display-5">兑现承诺价值</h5>
+            <h4 class="display-4"><a class="titlepopoutrightminired">结约通证</a></h4>
+            <!--h4 class="display-4"><i class="fab fa-ethereum ethglow-green"></i></h4-->
+
+        </div>
+
+<div style="height:50px" class="container text-center">
+<h3 style="color:white" class="display-4 scammed"></h3>
+</div>
+    <!-- /fomo -->
+    <div class="container" style="margin-top:-1rem;">
+        <div class="row">
+            <!-- biddings & vault -->
+            <div class="col-sm">
+                <ul class="nav nav-tabs tabs-border-adjust" id="buyTabs" role="tablist">
+                    <li class="nav-item tab-item">
+                        <a class="nav-link nav-link-gren tab-link active" id="purchaseTab" data-toggle="tab" href="#purchaseArea" role="tab" aria-controls="purchaseArea" aria-selected="true">购买</a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link nav-link-gren tab-link" id="sellTab" data-toggle="tab" href="#sellArea" role="tab" aria-controls="sellArea" aria-selected="false">卖出</a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link nav-link-gren tab-link" id="refTab" data-toggle="tab" href="#refArea" role="tab" aria-controls="refArea" aria-selected="false">邀请链接</a>
+                    </li>
+                    <li class="nav-item tab-item">
+                        <a class="nav-link nav-link-gren tab-link" id="contractsTab" data-toggle="tab" href="#contractsArea" role="tab" aria-controls="contractsArea" aria-selected="false">智能合约</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="buyArea">
+                    <!-- buy JYT -->
+                    <div class="tab-pane fade show active" id="purchaseArea" role="tabpanel" aria-labelledby="purchaseArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">购买结约通证：</p>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-right nomarginb tutorial">
+                                        <i class="fas fa-arrow-right pulsetutorial tutorialArrow"></i>
+                                        <a tabindex="0" type="button" class="qbtn" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" title="购买结约通证" data-content="{popover.jytbuy}">
+<i class="far fa-question-circle"></i>
+</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Ticket Purchase -->
+                            <div class="row">
+                                <div class="col">
+                                    <div id="purchase" class="tab-pane fade show active" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="small text-center">当前买入单价：{$this.buyPrice} ETH/JYT</p>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="purchase">
+                                            <div class="col">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+  <i class="fas fa-coins"></i>
+</span>
+                                                    </div>
+                                                    <input type="text" id="ethToSpend" class="form-control text-center" placeholder="0.01 ETH">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="tokenQuotation">
+  = 0 JYT
+</span>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="row" style="position: relative;">
+                                            <div class="col">
+                                                <button type="button" id="ethSend" class="btn btn-block btn-gren btn-lg ticketProcess">立刻购买</button>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" id="ethReinvest" class="btn btn-block btn-outline-gren btn-lg ticketProcess">用利润购买</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /buy JYT -->
+                    <!-- sell JYT -->
+                    <div class="tab-pane fade show" id="sellArea" role="tabpanel" aria-labelledby="sellArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">卖出结约通证:</p>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-right nomarginb tutorial">
+                                        <i class="fas fa-arrow-right pulsetutorial tutorialArrow"></i>
+                                        <a tabindex="0" type="button" class="qbtn" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" title="卖出机制" data-content="{popover.jytsell}">
+<i class="far fa-question-circle"></i>
+</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Ticket sale -->
+                            <div class="row">
+                                <div class="col">
+                                    <div id="purchase" class="tab-pane fade show active" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="small text-center">当前卖出单价：{$this.sellPrice} JYT/ETH</p>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="purchase">
+                                            <div class="col">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+  <i class="fab fa-ethereum"></i>
+</span>
+                                                    </div>
+                                                    <input type="text" id="ethToSell" class="form-control text-center" placeholder="0.01 JYT">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="ethQuotation">
+  = 0 ETH
+</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="small text-center">卖出后获得的 ETH 将存在金库里。你需要手动点击“提现”按钮，转账到钱包。</p>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="position: relative;">
+                                            <div class="col">
+                                                <button type="button" id="ethSell" class="btn btn-block btn-gren btn-lg ticketProcess">立刻卖出</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /sell JYT -->
+                    <!-- vanity -->
+                    <div class="tab-pane fade" id="refArea" role="tabpanel" aria-labelledby="refArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead nomarginb">邀请链接:</p>
+                                </div>
+                                <div class="col-auto">
+                                    <p class="text-right nomarginb tutorial">
+                                        <i class="fas fa-arrow-right pulsetutorial tutorialArrow"></i>
+                                        <a tabindex="0" type="button" class="qbtn" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="bottom" title="推广网络" data-content="{popover.jytmasternode}">
+<i class="far fa-question-circle"></i>
+</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="jumbotron jumbotron-adjust teamscore">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead">必须持有至少5 JYT 才能解锁邀请功能</p>
+                                    </div>
+                                </div>
+                                <div if={$this.myTokens>= 5}>
+                                    <div class="row">
+                                        <div class="col text-center">
+                                            <p>
+                                                <i class="fas fa-link"></i>
+                                                <span class="small" id="mnlink">https://jytoken.io/{web3.eth.defaultAccount}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button class="btn btn-outline-gren btn-block" id="copyCeoLink" data-clipboard-target="#mnlink" }>
+                                                <i class="fas fa-paste"></i> 复制邀请链接
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /vanity -->
+                    <!-- smartcontract -->
+                    <div class="tab-pane fade" id="contractsArea" role="tabpanel" aria-labelledby="contractsArea">
+                        <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+
+                            <div class="jumbotron jumbotron-adjust teamscore">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="lead">结约通证智能合约完全开源透明</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <p>
+                                            <i class="fas fa-link"></i>
+                                            <span class="small" id="mnlink"><a href="https://etherscan.io/address/0xe810F80E3401f67e5Cb2dD803599BfC9D3bffCB9" target="_blank">https://etherscan.io/address/0xe810F80E3401f67e5Cb2dD803599BfC9D3bffCB9</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /smartcontract -->
+
+
+                </div>
+            </div>
+            <!-- stat tabs -->
+            <div class="col-sm">
+                <ul class="nav nav-tabs tabs-border-adjust" id="buyTabs" role="tablist">
+                    <li class="nav-item tab-item">
+                        <a class="nav-link nav-link-gren tab-link active" id="vaultTab" data-toggle="tab" href="#vaultArea" role="tab" aria-controls="vaultArea" aria-selected="true">金库</a>
+                    </li>
+                </ul>
+                <!-- vault -->
+                <div class="tab-pane fade show active" id="vaultArea" role="tabpanel" aria-labelledby="vaultArea">
+                    <div class="jumbotron jumbotron-adjust text-light bg-dark jumboshade tab-rounded">
+                        <div class="jumbotron jumbotron-adjust teamscore">
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead">结约通证总量</p>
+                                </div>
+                                <div class="col">
+                                    <p class="h3 text-right">{$this.totalSupply}</p>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead">合约内 ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="h3 text-right">{$this.ethInBalance} <i class="fab fa-ethereum"></i></p>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead">持有结约通证</p>
+                                </div>
+                                <div class="col">
+                                    <p class="h3 text-right">{$this.myTokens}</p>
+                                    <p class="text-right">{$this.myTokensInETH} <i class="fab fa-ethereum"></i></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="lead">利润 ETH</p>
+                                </div>
+                                <div class="col">
+                                    <p class="h3 text-right">{$this.myDivs} <i class="fab fa-ethereum"></i></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="text-right nomarginb">
+                                        <button href="" class="btn btn-outline-gren btn-block" id="withdrawEarnings"><i class="fas fa-hand-holding-heart"></i> 立刻提现利润</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="copyright">
+            <p style="font-size:1rem" align=center>
+                &copy; 2018 <a><b>jytoken.io</b></a>. All Rights Reserved.
+                <br />
+            </p>
+        </section>
+    </div>
+    <!-- modal popup -->
+    <div class="modal fade" id="gameover" tabindex="-1" role="dialog" aria-labelledby="gameoverTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gameoverTitle">Modal Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Modal Content
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /modal popup -->
+    <!-- If something breaks delet this script justo made; -->
+    <script>
+    // Contain the popover within the body NOT the element it was called in.
+    $('[data-toggle="popover"]').popover({
+        container: 'body'
+    });
+
+
+    var today = new Date();
+    var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    var firstDate = new Date(2018, 02, 11); // Date the JYT exchange opened;
+    var diffDays = Math.round(Math.abs((today.getTime() - firstDate.getTime()) / (oneDay)));
+    </script>
+    <script>
+    $this = this
+    $this.on('mount', fn => {
+
+    })
+
+    async function assemble() {
+        $this.totalSupply=BN(JUST.Cache.JYT.Blockchain[0]).div(1e18).toFixed(4)
+        $this.USDPerETH = JUST.Cache.JYT.Blockchain[5].USD
+        $this.myTokens = BN(JUST.Cache.JYT.Blockchain[3]).div(1e18).toFixed(4)
+        $this.myDivs = BN(JUST.Cache.JYT.Blockchain[4]).div(1e18).toFixed(4)
+        $this.myTokensInETH = BN(JUST.Cache.JYT.Conversions[0]).div(1e18).toFixed(4)
+        $this.myTokensInUSD = ($this.myTokensInETH * $this.USDPerETH).toFixed(2)
+        $this.myDivsInETH = BN(JUST.Cache.JYT.Conversions[1]).div(1e18).toFixed(4)
+        $this.myDivsInUSD = ($this.myDivs * $this.USDPerETH).toFixed(2)
+        $this.myReinvestmentQuotation = BN(JUST.Cache.JYT.Conversions[1]).div(1e18).toFixed(4)
+        $this.ethInBalance = (BN(JUST.Cache.JYT.Blockchain[6]).div(1e18).toFixed(4)-BN(JUST.Cache.JYT.Blockchain[7]).div(1e18).toFixed(4)).toFixed(4)
+        $this.buyPrice=BN(JUST.Cache.JYT.Blockchain[8]).div(1e18).toFixed(6)
+        $this.sellPrice=BN(JUST.Cache.JYT.Blockchain[9]).div(1e18).toFixed(6)
+
+
+        console.log($this)
+    }
+
+    async function rewire() {
+        await jQuery("#ethSend").unbind()
+        await jQuery("#ethToSpend").unbind()
+        await jQuery("#ethReinvest").unbind()
+        await jQuery("#ethSell").unbind()
+        await jQuery("#withdrawEarnings").unbind()
+
+        new ClipboardJS('.btn');
+
+        $("#ethToSpend").bind('input', async e => {
+            let quotation = await JUST.Bridges.Browser.contracts.JYT.read("calculateTokensReceived", BN($('#ethToSpend').val()).multipliedBy(1e18).toFixed())
+            $('#tokenQuotation').text(` = ${BN(quotation).div(1e18).toFixed(4)} JYT`)
+        })
+
+        $("#ethToSell").bind('input', async e => {
+            let quotation = await JUST.Bridges.Browser.contracts.JYT.read("calculateEthereumReceived", BN($('#ethToSell').val()).multipliedBy(1e18).toFixed())
+            $('#ethQuotation').text(` = ${BN(quotation).div(1e18).toFixed(4)} ETH`)
+        })
+
+        $('#ethSend').on('click', async e => {
+            if (!JUST.Bridges.Metamask || !JUST.Bridges.Metamask.signedIn) return alertify.alert("你还没连接上以太坊钱包。")
+            let correctNetwork = await JUST.checkNetwork()
+            if (!correctNetwork) return alertify.alert("你没有正确的连接上网络。请确认你已经连接上以太坊主网。")
+
+            try {
+                jQuery('#loading').modal({ backdrop: 'static', keyboard: false })
+                let spending = BN($("#ethToSpend").val()).multipliedBy(1e18).toFixed()
+                /*
+                let masternode = localStorage.getItem("masternode") && JSON.parse(localStorage.getItem("masternode")) ? JSON.parse(localStorage.getItem("masternode")) : false
+                if (masternode.type && masternode.type == "address") {
+                    let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", masternode.value, { value: spending })
+                } else {
+                    let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", ["0x0"], { value: spending })
+                }
+                */               
+                let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", ["0x0"], { value: spending })
+
+                jQuery('#loading').modal('hide')
+                alertify.log(`你的结约通证购买请求已经发送到区块链!`)
+                console.log(receipt)
+            } catch (e) {
+                console.log(e)
+                alertify.log(`购买订单已经被取消。`)
+                jQuery('#loading').modal('hide')
+            }
+        })
+
+        $('#ethReinvest').on('click', async e => {
+            if (!JUST.Bridges.Metamask || !JUST.Bridges.Metamask.signedIn) return alertify.alert("你还没连接上以太坊钱包。")
+            let correctNetwork = await JUST.checkNetwork()
+            if (!correctNetwork) return alertify.alert("你没有正确的连接上网络。请确认你已经连接上以太坊主网。")
+
+            try {
+                jQuery('#loading').modal({ backdrop: 'static', keyboard: false })
+                let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("reinvest")
+                jQuery('#loading').modal('hide')
+                alertify.log(`你的结约通证购买请求已经发送到区块链!`)
+                console.log(receipt)
+            } catch (e) {
+                console.log(e)
+                alertify.log(`购买订单已经被取消。`)
+                jQuery('#loading').modal('hide')
+            }
+        })
+
+        $('#ethSell').on('click', async e => {
+            if (!JUST.Bridges.Metamask || !JUST.Bridges.Metamask.signedIn) return alertify.alert("你还没连接上以太坊钱包。")
+            let correctNetwork = await JUST.checkNetwork()
+            if (!correctNetwork) return alertify.alert("你没有正确的连接上网络。请确认你已经连接上以太坊主网。")
+
+            try {
+                jQuery('#loading').modal({ backdrop: 'static', keyboard: false })
+                let selling = BN($("#ethToSell").val()).multipliedBy(1e18).toFixed()
+                let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("sell", [selling])
+                jQuery('#loading').modal('hide')
+                alertify.log(`你的结约通证卖出请求已经发送到区块链!`)
+                console.log(receipt)
+            } catch (e) {
+                console.log(e)
+                alertify.log(`卖出订单已经被取消。`)
+                jQuery('#loading').modal('hide')
+            }
+        })
+
+        $('#withdrawEarnings').on('click', async e => {
+            if (!JUST.Bridges.Metamask || !JUST.Bridges.Metamask.signedIn) return alertify.alert("你还没连接上以太坊钱包。")
+            let correctNetwork = await JUST.checkNetwork()
+            if (!correctNetwork) return alertify.alert("你没有正确的连接上网络。请确认你已经连接上以太坊主网。")
+
+            try {
+                jQuery('#loading').modal({ backdrop: 'static', keyboard: false })
+                let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("withdraw")
+                jQuery('#loading').modal('hide')
+                alertify.log(`你的提现请求已经发送到区块链!`)
+                console.log(receipt)
+            } catch (e) {
+                console.log(e)
+                jQuery('#loading').modal('hide')
+                alertify.log(`提现订单已经被取消。`)
+            }
+        })
+    }
+
+    $this.on('update', assemble)
+    $this.on('updated', rewire)
+    $this.on('before-mount', assemble)
+    $this.on('mount', rewire)
+    this.on('unmount', fn => {
+        if ($this.timer && typeof $this.timer !== "undefined") clearTimeout($this.timer)
+    })
+    </script>
+</state-jyt>
