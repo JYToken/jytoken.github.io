@@ -415,14 +415,14 @@ with love -justo */
             try {
                 jQuery('#loading').modal({ backdrop: 'static', keyboard: false })
                 let spending = BN($("#ethToSpend").val()).multipliedBy(1e18).toFixed()
-                /*
+                
                 let masternode = localStorage.getItem("masternode") && JSON.parse(localStorage.getItem("masternode")) ? JSON.parse(localStorage.getItem("masternode")) : false
                 if (masternode.type && masternode.type == "address") {
                     let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", masternode.value, { value: spending })
                 } else {
                     let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", ["0x0"], { value: spending })
                 }
-                */               
+                               
                 let receipt = await JUST.Bridges.Metamask.contracts.JYT.write("buy", ["0x0"], { value: spending })
 
                 jQuery('#loading').modal('hide')
