@@ -73790,6 +73790,7 @@ _ = require('lodash')
 // 	}, params)
 // }
 
+
 class Bridge {
 	constructor(params) {
 		var $this = this
@@ -73797,42 +73798,58 @@ class Bridge {
 		this.listeners = {}
 		this.contracts = []
 		this._lastWallet = []
-		this.options = _.merge({
-			web3: false
-		}, params)
+		this.options = _.merge(
+			{
+				web3: false
+			},
+			params
+		)
 
-		if(!this.options.web3) {
-			throw "MissingParam: Please provide a web3 parameter to interact with. This can either be a string pointing to the HTTP RPC, or a pre-constructed web3 instance."
+		if (!this.options.web3) {
+			throw 'MissingParam: Please provide a web3 parameter to interact with. This can either be a string pointing to the HTTP RPC, or a pre-constructed web3 instance.'
 		}
 
-		if(typeof this.options.web3 === "string"){ 
-			this.web3 = new w3Constructor( new w3Constructor.providers.HttpProvider(this.options.web3) )
+		if (typeof this.options.web3 === 'string') {
+			this.web3 = new w3Constructor(new w3Constructor.providers.HttpProvider(this.options.web3))
 		} else {
-			this.web3  = this.options.web3
+			this.web3 = this.options.web3
+			if (window.ethereum) {
+				window.ethereum
+					.enable()
+					.then(() => {
+						this.web3 = this.options.web3
+						this.signedIn = this.web3.eth.defaultAccount ? true : false
+						if (this.signedIn) this._lastWallet = this.web3.eth.defaultAccount
+					})
+					.catch(() => {
+						alertify.error('Could not athenticate your Ethereum wallet.')
+					})
+			}
 		}
 
 		this.signedIn = this.web3.eth.defaultAccount ? true : false
-		if(this.signedIn) this._lastWallet = this.web3.eth.defaultAccount
+		if (this.signedIn) this._lastWallet = this.web3.eth.defaultAccount
 
-		this.listeners.signedIn = setInterval(function(){
-			if($this._lastWallet !== $this.web3.eth.defaultAccount) {
+		this.listeners.signedIn = setInterval(function() {
+			if ($this._lastWallet !== $this.web3.eth.defaultAccount) {
 				$this.trigger('status.signedIn', !this.signedIn)
-				$this.signedIn = ($this.web3.eth.defaultAccount ? true : false)
+				$this.signedIn = $this.web3.eth.defaultAccount ? true : false
 				$this._lastWallet = $this.web3.eth.defaultAccount
 			}
 		}, 1000)
 	}
 
 	wallet() {
-		if(this.web3.version.api && this.web3.version.api.includes("0.2")){
+		if (this.web3.version.api && this.web3.version.api.includes('0.2')) {
 			return this.web3.eth.defaultAccount
-		} else if (this.web3.version.includes("1.")) {
+		} else if (this.web3.version.includes('1.')) {
 			return this.web3.eth.defaultAccount
 		} else {
-			throw "InvalidType: Unrecognized web3js version. Are you sure this is a web3js instance?"
+			throw 'InvalidType: Unrecognized web3js version. Are you sure this is a web3js instance?'
 		}
 	}
 }
+
 
 /**
  * Universal contract wrapper contract to interface with the blockchain. 
