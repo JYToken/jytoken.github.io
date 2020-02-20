@@ -23,7 +23,7 @@ var REGISTRATION_KEY = '@@any-promise/REGISTRATION',
  * 3. Auto detected promise based on first sucessful require of
  *    known promise libraries. Note this is a last resort, as the
  *    loaded library is non-deterministic. node.js >= 0.12 will
- *    always use global.Promise over this priority list.
+ *    always use global.Promise over this priority list
  * 4. Throws error.
  *
  * For Browser:
