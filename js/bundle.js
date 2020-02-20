@@ -74598,10 +74598,10 @@ jQuery(fn => { ( async function(){
 					API: (typeof web3 !== "undefined" ? web3 : false)
 				}, {
 					name: "Browser",
-					API: "https://mainnet.infura.io/YKZGQG2QTBx0tiWoB2IF"	
+					API: "https://mainnet.infura.io/v3/11119521b2bb42508592a2afd6e00a63"	
 				}, {
 					name: "Websocket",
-					API: new w3Constructor( new w3Constructor.providers.WebsocketProvider("wss://mainnet.infura.io/_ws"))
+					API: new w3Constructor( new w3Constructor.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/11119521b2bb42508592a2afd6e00a63"))
 				}		
 			],
 			contracts: [
